@@ -2,6 +2,7 @@ package pl.pawel.ui.controller;
 
 import org.springframework.web.bind.annotation.*;
 import pl.pawel.ui.model.request.UserDetailsRequestModel;
+import pl.pawel.ui.model.response.UserRest;
 
 @RestController
 @RequestMapping("users")
@@ -13,8 +14,8 @@ public class UserController {
     }
 
     @PostMapping
-    public String createUser(@RequestBody UserDetailsRequestModel userDetails) {
-        return "create user was called";
+    public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails) {
+        return null;
     }
 
     @PutMapping
