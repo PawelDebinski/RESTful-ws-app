@@ -1,6 +1,9 @@
 package pl.pawel.ui.controller;
 
+import org.springframework.beans.BeanUtils;
+import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.*;
+import pl.pawel.shared.dto.UserDto;
 import pl.pawel.ui.model.request.UserDetailsRequestModel;
 import pl.pawel.ui.model.response.UserRest;
 
@@ -15,7 +18,15 @@ public class UserController {
 
     @PostMapping
     public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails) {
-        return null;
+        UserRest returnValue = new UserRest();
+
+        UserDto userDto = new UserDto();
+        BeanUtils.copyProperties(userDetails, userDto);
+
+        UserDto createdUser = userService.createUser(userDto);
+        BeanUtils.copyProperties(createdUser, returnValue);
+
+        return returnValue;
     }
 
     @PutMapping
