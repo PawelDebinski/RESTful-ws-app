@@ -1,8 +1,10 @@
 package pl.pawel.ui.controller;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.*;
+import pl.pawel.service.UserService;
 import pl.pawel.shared.dto.UserDto;
 import pl.pawel.ui.model.request.UserDetailsRequestModel;
 import pl.pawel.ui.model.response.UserRest;
@@ -10,6 +12,9 @@ import pl.pawel.ui.model.response.UserRest;
 @RestController
 @RequestMapping("users")
 public class UserController {
+
+    @Autowired
+    UserService userService;
 
     @GetMapping
     public String getUser() {
