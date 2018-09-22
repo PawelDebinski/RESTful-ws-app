@@ -1,9 +1,6 @@
 package pl.pawel.io.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity(name = "users")
@@ -12,8 +9,8 @@ public class UserEntity implements Serializable {
     private static final long serialVersionUID = 5096462602451344775L;
 
     @Id
-    @GeneratedValue
-    private Long id;
+    @GeneratedValue()
+    private long id;
 
     @Column(nullable = false)
     private String userId;
@@ -32,14 +29,14 @@ public class UserEntity implements Serializable {
 
     private String emailVerificationToken;
 
-    @Column(nullable = false, columnDefinition = "boolean default false")
+    @Column(nullable = true, columnDefinition = "boolean default false")
     private Boolean emailVerificationStatus;
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
