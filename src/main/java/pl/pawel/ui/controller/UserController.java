@@ -23,10 +23,11 @@ public class UserController {
 
     @PostMapping
     public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails) {
-        UserRest returnValue = new UserRest();
 
         UserDto userDto = new UserDto();
         BeanUtils.copyProperties(userDetails, userDto);
+
+        UserRest returnValue = new UserRest();
 
         UserDto createdUser = userService.createUser(userDto);
         BeanUtils.copyProperties(createdUser, returnValue);

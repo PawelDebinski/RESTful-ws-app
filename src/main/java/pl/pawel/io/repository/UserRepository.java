@@ -7,4 +7,6 @@ import pl.pawel.io.entity.UserEntity;
 @Repository
 public interface UserRepository extends CrudRepository<UserEntity, Long > {
 
+    UserEntity findByEmail(String email);
+
 }
