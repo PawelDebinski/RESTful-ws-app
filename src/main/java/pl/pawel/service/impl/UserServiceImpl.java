@@ -1,5 +1,7 @@
 package pl.pawel.service.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -18,6 +20,8 @@ import java.util.ArrayList;
 @Service
 public class UserServiceImpl implements UserService {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
+
     @Autowired
     UserRepository userRepository;
 
@@ -29,7 +33,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto createUser(UserDto user) {
-
+        LOGGER.info("=== Inside createUser()");
         if(userRepository.findByEmail(user.getEmail()) != null ) throw new RuntimeException("Record already exists");
 
         UserEntity userEntity = new UserEntity();
@@ -49,6 +53,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto getUser(String email) {
+        LOGGER.info("=== Inside getUser()");
         UserEntity userEntity = userRepository.findByEmail(email);
 
         if(userEntity == null) throw new UsernameNotFoundException(email);
@@ -60,6 +65,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        LOGGER.info("=== Inside loadUserByUsername()");
         UserEntity userEntity = userRepository.findByEmail(email);
 
         if(userEntity == null) throw new UsernameNotFoundException(email);
