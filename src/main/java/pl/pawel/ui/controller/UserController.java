@@ -28,14 +28,18 @@ public class UserController {
 
     @PostMapping
     public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails) {
-        LOGGER.info("=== Inside createUser()");
+        LOGGER.info("=== Inside createUser() -> userDetails: {}", userDetails);
+
         UserDto userDto = new UserDto();
         BeanUtils.copyProperties(userDetails, userDto);
-
-        UserRest returnValue = new UserRest();
+        LOGGER.info("===  userDto from request: {}", userDto);
 
         UserDto createdUser = userService.createUser(userDto);
+        LOGGER.info("===  userDto from database: {}", createdUser);
+
+        UserRest returnValue = new UserRest();
         BeanUtils.copyProperties(createdUser, returnValue);
+        LOGGER.info("===  userRest: {}", returnValue);
 
         return returnValue;
     }

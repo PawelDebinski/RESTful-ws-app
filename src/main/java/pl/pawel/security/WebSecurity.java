@@ -27,8 +27,11 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         LOGGER.info("=== Inside configure(http)");
         http.csrf().disable().authorizeRequests()
-        .antMatchers(HttpMethod.POST, SecurityConstants.SIGN_UP_URL)
-        .permitAll().anyRequest().authenticated().and().addFilter(getAuthenticationFilter());
+                .antMatchers(HttpMethod.POST, SecurityConstants.SIGN_UP_URL)
+                .permitAll()
+                .anyRequest().authenticated().and()
+                .addFilter(getAuthenticationFilter())
+                .addFilter(new AuthorizationFilter(authenticationManager()));
     }
 
     @Override
