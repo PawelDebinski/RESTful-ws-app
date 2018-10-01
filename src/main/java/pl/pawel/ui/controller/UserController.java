@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import pl.pawel.service.UserService;
 import pl.pawel.shared.dto.UserDto;
@@ -20,7 +21,8 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @GetMapping(path = "/{id}")
+    @GetMapping(path = "/{id}",
+            produces ={MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public UserRest getUser(@PathVariable String id) {
         LOGGER.info("=== Inside getUser()");
         UserRest returnValue = new UserRest();
@@ -30,7 +32,8 @@ public class UserController {
         return returnValue;
     }
 
-    @PostMapping
+    @PostMapping( consumes = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE},
+            produces ={MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails) {
         LOGGER.info("=== Inside createUser() -> userDetails: {}", userDetails);
 
