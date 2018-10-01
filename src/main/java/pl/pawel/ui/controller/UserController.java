@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import pl.pawel.exceptions.UserServiceException;
 import pl.pawel.service.UserService;
 import pl.pawel.shared.dto.UserDto;
 import pl.pawel.ui.model.request.UserDetailsRequestModel;
+import pl.pawel.ui.model.response.ErrorMessages;
 import pl.pawel.ui.model.response.UserRest;
 
 @RestController
@@ -34,8 +36,10 @@ public class UserController {
 
     @PostMapping( consumes = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE},
             produces ={MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
-    public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails) {
+    public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails) throws Exception {
         LOGGER.info("=== Inside createUser() -> userDetails: {}", userDetails);
+
+        if(userDetails.getFirstName().isEmpty()) throw new UserServiceException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
 
         UserDto userDto = new UserDto();
         BeanUtils.copyProperties(userDetails, userDto);
