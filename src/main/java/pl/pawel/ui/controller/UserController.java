@@ -11,8 +11,7 @@ import pl.pawel.exceptions.UserServiceException;
 import pl.pawel.service.UserService;
 import pl.pawel.shared.dto.UserDto;
 import pl.pawel.ui.model.request.UserDetailsRequestModel;
-import pl.pawel.ui.model.response.ErrorMessages;
-import pl.pawel.ui.model.response.UserRest;
+import pl.pawel.ui.model.response.*;
 
 @RestController
 @RequestMapping("users")
@@ -77,9 +76,17 @@ public class UserController {
         return returnValue;
     }
 
-    @DeleteMapping
-    public String deleteUser() {
+    @DeleteMapping(path = "/{id}",
+                   produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    public OperationStatusModel deleteUser(@PathVariable String id) {
         LOGGER.info("=== Inside deleteUser()");
-        return "delete user was called";
+        OperationStatusModel returnValue = new OperationStatusModel();
+        returnValue.setOperationName(RequestOperationName.DELETE.name());
+
+        userService.deleteUser(id);
+
+        returnValue.setOperationResult(RequestOperationStatus.SUCCESS.name());
+
+        return returnValue;
     }
 }
