@@ -37,7 +37,7 @@ public class UserController {
     @PostMapping( consumes = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE},
                   produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails) throws Exception {
-        LOGGER.info("=== Inside createUser() -> userDetails: {}", userDetails);
+        LOGGER.info("=== Inside createUser()");
 
         if(userDetails.getFirstName().isEmpty()) throw new UserServiceException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
 
@@ -67,7 +67,7 @@ public class UserController {
         BeanUtils.copyProperties(userDetails, userDto);
         LOGGER.info("===  userDto from request: {}", userDto);
 
-        UserDto updatedUser = userService.updateUser(userDto);
+        UserDto updatedUser = userService.updateUser(id, userDto);
         LOGGER.info("===  userDto from database: {}", updatedUser);
 
         UserRest returnValue = new UserRest();
