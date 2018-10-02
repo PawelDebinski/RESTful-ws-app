@@ -24,7 +24,7 @@ public class UserController {
     UserService userService;
 
     @GetMapping(path = "/{id}",
-            produces ={MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+                produces ={MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public UserRest getUser(@PathVariable String id) {
         LOGGER.info("=== Inside getUser()");
         UserRest returnValue = new UserRest();
@@ -35,7 +35,7 @@ public class UserController {
     }
 
     @PostMapping( consumes = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE},
-            produces ={MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+                  produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails) throws Exception {
         LOGGER.info("=== Inside createUser() -> userDetails: {}", userDetails);
 
@@ -55,10 +55,26 @@ public class UserController {
         return returnValue;
     }
 
-    @PutMapping
-    public String updateUser() {
+    @PutMapping(path = "/{id}",
+            consumes = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE},
+            produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    public UserRest updateUser (@PathVariable String id, @RequestBody UserDetailsRequestModel userDetails) {
         LOGGER.info("=== Inside updateUser()");
-        return "update user was called";
+
+        if(userDetails.getFirstName().isEmpty()) throw new UserServiceException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
+
+        UserDto userDto = new UserDto();
+        BeanUtils.copyProperties(userDetails, userDto);
+        LOGGER.info("===  userDto from request: {}", userDto);
+
+        UserDto updatedUser = userService.updateUser(userDto);
+        LOGGER.info("===  userDto from database: {}", updatedUser);
+
+        UserRest returnValue = new UserRest();
+        BeanUtils.copyProperties(updatedUser, returnValue);
+        LOGGER.info("===  userRest: {}", returnValue);
+
+        return returnValue;
     }
 
     @DeleteMapping
