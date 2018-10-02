@@ -13,6 +13,9 @@ import pl.pawel.shared.dto.UserDto;
 import pl.pawel.ui.model.request.UserDetailsRequestModel;
 import pl.pawel.ui.model.response.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 @RequestMapping("users")
 public class UserController {
@@ -86,6 +89,23 @@ public class UserController {
         userService.deleteUser(id);
 
         returnValue.setOperationResult(RequestOperationStatus.SUCCESS.name());
+
+        return returnValue;
+    }
+
+    @GetMapping
+    public List<UserRest> getUsers(@RequestParam(value = "page", defaultValue ="0") int page,
+                                   @RequestParam(value = "limit", defaultValue = "25") int limit) {
+        LOGGER.info("=== Inside getUsers()");
+
+        List<UserDto> users = userService.getUsers(page, limit);
+
+        List<UserRest> returnValue = new ArrayList<>();
+        for(UserDto userDto : users) {
+            UserRest userModel = new UserRest();
+            BeanUtils.copyProperties(userDto, userModel);
+            returnValue.add(userModel);
+        }
 
         return returnValue;
     }
