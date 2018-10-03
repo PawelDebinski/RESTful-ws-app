@@ -1,6 +1,7 @@
 package pl.pawel.ui.controller;
 
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -10,10 +11,12 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import pl.pawel.exceptions.UserServiceException;
 import pl.pawel.service.UserService;
+import pl.pawel.shared.dto.AddressDto;
 import pl.pawel.shared.dto.UserDto;
 import pl.pawel.ui.model.request.UserDetailsRequestModel;
 import pl.pawel.ui.model.response.*;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,6 +104,22 @@ public class UserController {
             UserRest userModel = new UserRest();
             BeanUtils.copyProperties(userDto, userModel);
             returnValue.add(userModel);
+        }
+
+        return returnValue;
+    }
+
+    // http://localhost:8080/users/fj3498tywe9/addresses
+    @GetMapping(path = "/{id}/addresses",
+                produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    public List<AddressesRest> getUserAddresses(@PathVariable String id){
+        LOGGER.info("=== Inside getUserAddresses()");
+        List<AddressDto> addressesDto = addressesService.getAddresses(id);
+
+        List<AddressesRest> returnValue = new ArrayList<>();
+        if(addressesDto != null && !addressesDto.isEmpty()) {
+            Type listType = new TypeToken<List<AddressesRest>>() {}.getType();
+            returnValue = new ModelMapper().map(addressesDto, listType);
         }
 
         return returnValue;
