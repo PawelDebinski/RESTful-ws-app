@@ -1,5 +1,6 @@
 package pl.pawel.ui.controller;
 
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -43,8 +44,11 @@ public class UserController {
 
         if(userDetails.getFirstName().isEmpty()) throw new UserServiceException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
 
-        UserDto userDto = new UserDto();
-        BeanUtils.copyProperties(userDetails, userDto);
+//        UserDto userDto = new UserDto();
+//        BeanUtils.copyProperties(userDetails, userDto);
+        ModelMapper modelMapper = new ModelMapper(); // need to add dependency in pom
+        UserDto userDto = modelMapper.map(userDetails, UserDto.class);
+
         LOGGER.info("===  userDto from request: {}", userDto);
 
         UserDto createdUser = userService.createUser(userDto);
