@@ -33,6 +33,7 @@ public class UserController {
     @Autowired
     AddressService addressService;
 
+
     @GetMapping(path = "/{id}",
                 produces ={MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public UserRest getUser(@PathVariable String id) {
@@ -127,5 +128,15 @@ public class UserController {
         }
 
         return returnValue;
+    }
+
+    @GetMapping(path = "/{id}/addresses/{addressId}",
+            produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    public AddressesRest getUserAddress(@PathVariable String addressId) {
+        LOGGER.info("=== Inside getUserAddress()");
+        AddressDto addressDto = addressService.getAddress(addressId);
+        ModelMapper modelMapper = new ModelMapper();
+
+        return modelMapper.map(addressDto, AddressesRest.class);
     }
 }
