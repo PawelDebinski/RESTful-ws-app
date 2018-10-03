@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.pawel.io.entity.AddressEntity;
 import pl.pawel.io.entity.UserEntity;
+import pl.pawel.io.repository.AddressRepository;
 import pl.pawel.io.repository.UserRepository;
 import pl.pawel.service.AddressService;
 import pl.pawel.shared.dto.AddressDto;
