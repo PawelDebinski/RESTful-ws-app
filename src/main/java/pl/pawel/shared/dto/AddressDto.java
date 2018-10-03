@@ -65,4 +65,17 @@ public class AddressDto {
     public void setUserDetails(UserDto userDetails) {
         this.userDetails = userDetails;
     }
+
+    @Override
+    public String toString() {
+        return "AddressDto{" +
+                "id='" + id + '\'' +
+                ", city='" + city + '\'' +
+                ", country='" + country + '\'' +
+                ", streetName='" + streetName + '\'' +
+                ", postalCode='" + postalCode + '\'' +
+                ", type='" + type + '\'' +
+                ", userDetails=" + userDetails +
+                '}';
+    }
 }

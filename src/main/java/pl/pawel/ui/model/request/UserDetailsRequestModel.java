@@ -57,6 +57,7 @@ public class UserDetailsRequestModel {
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", addresses=" + addresses +
                 '}';
     }
 }

@@ -47,4 +47,15 @@ public class AddressRequestModel {
     public void setType(String type) {
         this.type = type;
     }
+
+    @Override
+    public String toString() {
+        return "AddressRequestModel{" +
+                "city='" + city + '\'' +
+                ", country='" + country + '\'' +
+                ", streetName='" + streetName + '\'' +
+                ", postalCode='" + postalCode + '\'' +
+                ", type='" + type + '\'' +
+                '}';
+    }
 }
