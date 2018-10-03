@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity(name = "addresses")
-public class addressEntity implements Serializable {
+public class AddressEntity implements Serializable {
 
     private static final long serialVersionUID = 8962668555046295222L;
 
@@ -100,7 +100,7 @@ public class addressEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "addressEntity{" +
+        return "AddressEntity{" +
                 "id='" + id + '\'' +
                 ", addressId='" + addressId + '\'' +
                 ", city='" + city + '\'' +

@@ -2,6 +2,7 @@ package pl.pawel.io.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity(name = "users")
 public class UserEntity implements Serializable {
@@ -31,6 +32,9 @@ public class UserEntity implements Serializable {
 
     @Column(nullable = true, columnDefinition = "boolean default false")
     private Boolean emailVerificationStatus;
+
+    @OneToMany(mappedBy = "userDetails", cascade = CascadeType.ALL)
+    private List<AddressEntity> addresses;
 
     public long getId() {
         return id;
@@ -96,6 +100,14 @@ public class UserEntity implements Serializable {
         this.emailVerificationStatus = emailVerificationStatus;
     }
 
+    public List<AddressEntity> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<AddressEntity> addresses) {
+        this.addresses = addresses;
+    }
+
     @Override
     public String toString() {
         return "UserEntity{" +
@@ -107,6 +119,7 @@ public class UserEntity implements Serializable {
                 ", encryptedPassword='" + encryptedPassword + '\'' +
                 ", emailVerificationToken='" + emailVerificationToken + '\'' +
                 ", emailVerificationStatus=" + emailVerificationStatus +
+                ", addresses=" + addresses +
                 '}';
     }
 }
