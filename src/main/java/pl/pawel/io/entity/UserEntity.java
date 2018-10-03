@@ -1,5 +1,7 @@
 package pl.pawel.io.entity;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -30,7 +32,7 @@ public class UserEntity implements Serializable {
 
     private String emailVerificationToken;
 
-    @Column(nullable = true, columnDefinition = "boolean default false")
+    @Column(nullable = false, columnDefinition = "boolean default false")
     private Boolean emailVerificationStatus;
 
     @OneToMany(mappedBy = "userDetails", cascade = CascadeType.ALL)
