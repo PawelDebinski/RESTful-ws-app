@@ -1,6 +1,7 @@
 package pl.pawel.shared.dto;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class UserDto implements Serializable {
 
@@ -14,6 +15,7 @@ public class UserDto implements Serializable {
     private String encryptedPassword;
     private String emailVerificationToken;
     private Boolean emailVerificationStatus;
+    private List<AddressDto> addressess;
 
     public long getId() {
         return id;
@@ -85,6 +87,14 @@ public class UserDto implements Serializable {
 
     public void setEmailVerificationStatus(Boolean emailVerificationStatus) {
         this.emailVerificationStatus = emailVerificationStatus;
+    }
+
+    public List<AddressDto> getAddressess() {
+        return addressess;
+    }
+
+    public void setAddressess(List<AddressDto> addressess) {
+        this.addressess = addressess;
     }
 
     @Override
