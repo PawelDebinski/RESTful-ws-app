@@ -44,6 +44,7 @@ public class UserController {
 
         if(userDetails.getFirstName().isEmpty()) throw new UserServiceException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
 
+        //Bean utils nadaje się do kopiowania prostych POJO, przy arrayach potrafi buggować, dlatego lepiej dodać dependency do Model Mappera
 //        UserDto userDto = new UserDto();
 //        BeanUtils.copyProperties(userDetails, userDto);
         ModelMapper modelMapper = new ModelMapper(); // need to add dependency in pom
@@ -54,8 +55,7 @@ public class UserController {
         UserDto createdUser = userService.createUser(userDto);
         LOGGER.info("===  userDto from database: {}", createdUser);
 
-        UserRest returnValue = new UserRest();
-        BeanUtils.copyProperties(createdUser, returnValue);
+        UserRest returnValue = modelMapper.map(createdUser, UserRest.class);
         LOGGER.info("===  userRest: {}", returnValue);
 
         return returnValue;

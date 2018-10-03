@@ -20,6 +20,12 @@ public class Utils {
         return generateRandomString(length);
     }
 
+    public String generateAddressId(int length) {
+        LOGGER.info("=== Inside generateUserId()");
+        return generateRandomString(length);
+    }
+
+
     private String generateRandomString(int length) {
         LOGGER.info("=== Inside generateRandomString()");
         StringBuilder returnValue = new StringBuilder(length);
