@@ -1,15 +1,38 @@
-package pl.pawel.shared.dto;
+package pl.pawel.io.entity;
 
-public class AddressDto {
+import javax.persistence.*;
+import java.io.Serializable;
 
+@Entity(name = "addresses")
+public class addressEntity implements Serializable {
+
+    private static final long serialVersionUID = 8962668555046295222L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
+
+    @Column(length = 30, nullable = false)
     private String addressId;
+
+    @Column(length = 15, nullable = false)
     private String city;
+
+    @Column(length = 30, nullable = false)
     private String country;
+
+    @Column(length = 100, nullable = false)
     private String streetName;
+
+    @Column(length = 7, nullable = false)
     private String postalCode;
+
+    @Column(length = 10, nullable = false)
     private String type;
-    private UserDto userDetails;
+
+    @ManyToOne
+    @JoinColumn(name = "users_id")
+    private UserEntity userDetails;
 
     public String getId() {
         return id;
@@ -17,6 +40,14 @@ public class AddressDto {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getAddressId() {
+        return addressId;
+    }
+
+    public void setAddressId(String addressId) {
+        this.addressId = addressId;
     }
 
     public String getCity() {
@@ -59,25 +90,17 @@ public class AddressDto {
         this.type = type;
     }
 
-    public UserDto getUserDetails() {
+    public UserEntity getUserDetails() {
         return userDetails;
     }
 
-    public void setUserDetails(UserDto userDetails) {
+    public void setUserDetails(UserEntity userDetails) {
         this.userDetails = userDetails;
-    }
-
-    public String getAddressId() {
-        return addressId;
-    }
-
-    public void setAddressId(String addressId) {
-        this.addressId = addressId;
     }
 
     @Override
     public String toString() {
-        return "AddressDto{" +
+        return "addressEntity{" +
                 "id='" + id + '\'' +
                 ", addressId='" + addressId + '\'' +
                 ", city='" + city + '\'' +
