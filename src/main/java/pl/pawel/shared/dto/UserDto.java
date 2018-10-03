@@ -97,19 +97,4 @@ public class UserDto implements Serializable {
         this.addresses = addresses;
     }
 
-    @Override
-    public String toString() {
-        return "UserDto{" +
-                "id=" + id +
-                ", userId='" + userId + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", encryptedPassword='" + encryptedPassword + '\'' +
-                ", emailVerificationToken='" + emailVerificationToken + '\'' +
-                ", emailVerificationStatus=" + emailVerificationStatus +
-                ", addresses=" + addresses +
-                '}';
-    }
 }

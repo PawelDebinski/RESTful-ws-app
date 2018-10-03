@@ -98,17 +98,4 @@ public class AddressEntity implements Serializable {
         this.userDetails = userDetails;
     }
 
-    @Override
-    public String toString() {
-        return "AddressEntity{" +
-                "id='" + id + '\'' +
-                ", addressId='" + addressId + '\'' +
-                ", city='" + city + '\'' +
-                ", country='" + country + '\'' +
-                ", streetName='" + streetName + '\'' +
-                ", postalCode='" + postalCode + '\'' +
-                ", type='" + type + '\'' +
-                ", userDetails=" + userDetails +
-                '}';
-    }
 }

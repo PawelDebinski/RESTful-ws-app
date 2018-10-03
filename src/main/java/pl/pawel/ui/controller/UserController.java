@@ -50,13 +50,8 @@ public class UserController {
         ModelMapper modelMapper = new ModelMapper(); // need to add dependency in pom
         UserDto userDto = modelMapper.map(userDetails, UserDto.class);
 
-        LOGGER.info("===  userDto from request: {}", userDto);
-
         UserDto createdUser = userService.createUser(userDto);
-        LOGGER.info("===  userDto from database: {}", createdUser);
-
         UserRest returnValue = modelMapper.map(createdUser, UserRest.class);
-        LOGGER.info("===  userRest: {}", returnValue);
 
         return returnValue;
     }
@@ -71,14 +66,11 @@ public class UserController {
 
         UserDto userDto = new UserDto();
         BeanUtils.copyProperties(userDetails, userDto);
-        LOGGER.info("===  userDto from request: {}", userDto);
 
         UserDto updatedUser = userService.updateUser(id, userDto);
-        LOGGER.info("===  userDto from database: {}", updatedUser);
 
         UserRest returnValue = new UserRest();
         BeanUtils.copyProperties(updatedUser, returnValue);
-        LOGGER.info("===  userRest: {}", returnValue);
 
         return returnValue;
     }

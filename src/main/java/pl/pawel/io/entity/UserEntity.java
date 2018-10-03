@@ -108,18 +108,4 @@ public class UserEntity implements Serializable {
         this.addresses = addresses;
     }
 
-    @Override
-    public String toString() {
-        return "UserEntity{" +
-                "id=" + id +
-                ", userId='" + userId + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", encryptedPassword='" + encryptedPassword + '\'' +
-                ", emailVerificationToken='" + emailVerificationToken + '\'' +
-                ", emailVerificationStatus=" + emailVerificationStatus +
-                ", addresses=" + addresses +
-                '}';
-    }
 }
