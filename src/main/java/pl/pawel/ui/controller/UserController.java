@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import pl.pawel.exceptions.UserServiceException;
+import pl.pawel.service.AddressService;
 import pl.pawel.service.UserService;
 import pl.pawel.shared.dto.AddressDto;
 import pl.pawel.shared.dto.UserDto;
@@ -28,6 +29,9 @@ public class UserController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    AddressService addressService;
 
     @GetMapping(path = "/{id}",
                 produces ={MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
@@ -114,7 +118,7 @@ public class UserController {
                 produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public List<AddressesRest> getUserAddresses(@PathVariable String id){
         LOGGER.info("=== Inside getUserAddresses()");
-        List<AddressDto> addressesDto = addressesService.getAddresses(id);
+        List<AddressDto> addressesDto = addressService.getAddresses(id);
 
         List<AddressesRest> returnValue = new ArrayList<>();
         if(addressesDto != null && !addressesDto.isEmpty()) {
