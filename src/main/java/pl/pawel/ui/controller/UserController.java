@@ -40,7 +40,8 @@ public class UserController {
         LOGGER.info("=== Inside getUser()");
         UserRest returnValue = new UserRest();
         UserDto userDto = userService.getUserByUserId(id);
-        BeanUtils.copyProperties(userDto, returnValue);
+        ModelMapper modelMapper = new ModelMapper();
+        returnValue = modelMapper.map(userDto, UserRest.class);
 
         return returnValue;
     }
@@ -105,11 +106,8 @@ public class UserController {
         List<UserDto> users = userService.getUsers(page, limit);
 
         List<UserRest> returnValue = new ArrayList<>();
-        for(UserDto userDto : users) {
-            UserRest userModel = new UserRest();
-            BeanUtils.copyProperties(userDto, userModel);
-            returnValue.add(userModel);
-        }
+        Type listType = new TypeToken<List<UserRest>>() {}.getType();
+        returnValue = new ModelMapper().map(users, listType);
 
         return returnValue;
     }

@@ -30,7 +30,7 @@ public class AddressEntity implements Serializable {
     @Column(length = 10, nullable = false)
     private String type;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "users_id")
     private UserEntity userDetails;
 
