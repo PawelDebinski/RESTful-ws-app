@@ -10,6 +10,7 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import pl.pawel.exceptions.UserServiceException;
 import pl.pawel.io.entity.AddressEntity;
 import pl.pawel.io.entity.UserEntity;
 import pl.pawel.io.repository.UserRepository;
@@ -81,7 +82,7 @@ class UserServiceImplTest {
     }
 
     @Test
-    public void createUser_UsernameNotFoundException() {
+    public void createUser_basic() {
         when(userRepository.findByEmail(anyString())).thenReturn(null);
         when(utils.generateAddressId(30)).thenReturn("e456sry54");
         when(utils.generateUserId(30)).thenReturn(userId);
@@ -106,6 +107,22 @@ class UserServiceImplTest {
         verify(bCryptPasswordEncoder, times(1)).encode("12345678");
         verify(userRepository, times(1)).save(any(UserEntity.class));
 
+    }
+
+    @Test
+    final void testCreateUser_CreateUserServiceException()
+    {
+        when(userRepository.findByEmail(anyString())).thenReturn(userEntity);
+        UserDto userDto = new UserDto();
+        userDto.setAddresses(getAddressDtos());
+        userDto.setFirstName("Paulo");
+        userDto.setLastName("Escobar");
+        userDto.setPassword("12345678");
+        userDto.setEmail("test@test.com");
+
+        assertThrows(UserServiceException.class,
+            () ->userService.createUser(userDto)
+        );
     }
 
     private List<AddressDto> getAddressDtos() {
